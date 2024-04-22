@@ -20,7 +20,7 @@ export class Cloud9Environment extends Construct {
             parameters: {
                 'CreateVPC': false,
                 'Cloud9VPC': props.vpcId,
-                'Cloud9Subnet': props.subnetId
+                'Cloud9Subnet': props.subnetId,
             },
             preserveLogicalIds: false
         });
@@ -30,10 +30,9 @@ export class Cloud9Environment extends Construct {
         }
 
         if (props.cloud9OwnerArn) {
-            template.getParameter("Cloud9OwnerRole").default = props.cloud9OwnerArn.valueOf();
+            template.getParameter("WorkshopOwnerArn").default = props.cloud9OwnerArn.valueOf();
         }
 
-        this.c9Role = template.getResource("C9Role") as CfnRole;
-
+        this.c9Role = template.getResource("FisWorkshopC9Role") as CfnRole;
     }
 }

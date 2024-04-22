@@ -33,7 +33,7 @@ Parameters:
   WorkshopOwnerArn:
     Type: String
     Description: The Arn of the Cloud9 Owner to be set if 3rdParty deployment.
-    Default: ""
+    Default: "AWS::NoValue"
   FisWorkshopC9InstanceVolumeSize: 
     Type: Number
     Description: The Size in GB of the Cloud9 Instance Volume. 
@@ -91,6 +91,9 @@ Parameters:
 
 Conditions: 
   Create3rdPartyResources: !Equals [ !Ref FisWorkshopC9EnvType, 3rdParty ]
+  SkipOwnerArn: !Equals
+    - !Ref WorkshopOwnerArn
+    - AWS::NoValue
   CreateVPC: !Equals
     - !Ref CreateVPC
     - True
@@ -118,7 +121,6 @@ Metadata:
           - C9InstanceVolumeSize
           - C9Image
           - PatchC9Instance
-          - Cloud9OwnerRole
 
 Resources:
   VPC:
@@ -671,7 +673,7 @@ Resources:
         Ref: FisWorkshopC9InstanceType
       SubnetId: !If [CreateVPC, !Ref PublicSubnet1, !Ref Cloud9Subnet ]
       Name: !Ref Cloud9Name
-      OwnerArn: !If [ Create3rdPartyResources, !Ref WorkshopOwnerArn, !Ref "AWS::NoValue" ]
+      OwnerArn: !If [SkipOwnerArn, !Ref "AWS::NoValue", !Sub "arn:${AWS::Partition}:iam::${AWS::AccountId}:${WorkshopOwnerArn}"]
       Tags: 
         - Key: SSMBootstrap
           Value: Active
