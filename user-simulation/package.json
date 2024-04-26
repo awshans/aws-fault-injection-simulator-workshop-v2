@@ -22,7 +22,9 @@
   "dependencies": {
     "@aws-cdk/aws-ssm": "^1.204.0",
     "aws-cdk-lib": "2.126.0",
+    "aws-sdk": "^2.1605.0",
     "constructs": "^10.0.0",
+    "puppeteer": "^22.7.0",
     "source-map-support": "^0.5.21"
   }
 }

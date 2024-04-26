@@ -100,21 +100,21 @@ export class UserSimulationStack extends cdk.Stack {
     new ecs.FargateService(this, 'dogAdoptService', {
       cluster,
       taskDefinition: dogAdoptTaskDefinition,
-      desiredCount: 5, 
+      desiredCount: 1, 
     });
 
     // Create getAllPetsService
     new ecs.FargateService(this, 'getAllPetsService', {
       cluster,
       taskDefinition: getAllPetsTaskDefinition,
-      desiredCount: 5, 
+      desiredCount: 1, 
     });
 
     // Create searchListService
     new ecs.FargateService(this, 'searchListService', {
       cluster,
       taskDefinition: searchListTaskDefinition,
-      desiredCount: 5, 
+      desiredCount: 1, 
     });
   }
 }
